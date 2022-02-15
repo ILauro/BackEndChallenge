@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" ng-app="myApp" ng-controller="myCtrl">
+    <h1 class="display-4">Welcome</h1>
+    <a ng-click="getData()">Click Me</a>
+    <ul>
+    <li ng-repeat="x in coins">
+      {{ x.name }}
+    </li>
+  </ul>
+</div>
