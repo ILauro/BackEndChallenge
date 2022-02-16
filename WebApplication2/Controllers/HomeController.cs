@@ -21,14 +21,21 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        public async Task<List<Root>> GetDataAsync()
+        [HttpPost]
+        public HttpResponseMessage GetData()
         {
             string apiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD";
+            var result = GetDataAsync(apiUrl);
 
+            return new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(new { Success = true, Data = result })) };
+        }
+
+        private async Task<List<Root>> GetDataAsync(string apiUrl)
+        {
+            var myDeserializedClass = new List<Root>();
             HttpResponseMessage response = await client.GetAsync(apiUrl);
             var data = await response.Content.ReadAsStringAsync();
-            List<Root> myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(data);
-
+            myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(data);
             return myDeserializedClass;
         }
 

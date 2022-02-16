@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{AB445C53-9775-4C66-BA5F-690F78073AAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEndChallenge", "ChatSample\BackEndChallenge.csproj", "{71FF626B-1D05-49CD-AAA4-86D955F81A16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB445C53-9775-4C66-BA5F-690F78073AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB445C53-9775-4C66-BA5F-690F78073AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB445C53-9775-4C66-BA5F-690F78073AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB445C53-9775-4C66-BA5F-690F78073AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71FF626B-1D05-49CD-AAA4-86D955F81A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71FF626B-1D05-49CD-AAA4-86D955F81A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71FF626B-1D05-49CD-AAA4-86D955F81A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71FF626B-1D05-49CD-AAA4-86D955F81A16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,23 +1,32 @@
 ﻿var app = angular.module("myApp", []);
-app.controller("myCtrl", function ($scope) {
+
+app.controller("myCtrl", function ($scope, $http) {
     $scope.coins = [];
 
-    $scope.getData = () => {
-        var url = 'Home/GetData';
+    $scope.init = function () {
+        $scope.getData();
+    }
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            success: function (result) {
-                if (result != null) {
-                    $scope.coins = result;
-                    console.log($scope.coins);
-                    alert('successfuly inserted');
-                }
-                else {
-                    alert('some error occured');
-                }
+    $scope.getData = function () {
+        var httpRequest = $http({
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: 'Home/GetData',
+            //data: JSON.stringify({ data: id })
+        }).then(function onSuccess(response) {
+            // Handle success
+            debugger;
+
+            if (response.success == true) {
+                $scope.coins = data.Data;
+                alert('Successfuly inserted');
             }
+
+        }).catch(function onError(response) {
+            // Handle error
+            alert('Error occured');
         });
     }
+
 });
