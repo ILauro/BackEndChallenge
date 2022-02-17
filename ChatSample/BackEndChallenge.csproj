@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="HomeController.cs" />
+    <Content Include="Controllers\HomeController.cs" />
   </ItemGroup>
 
   <ItemGroup>

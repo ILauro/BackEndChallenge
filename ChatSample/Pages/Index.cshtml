@@ -1,4 +1,7 @@
 ﻿@page
+@{
+    ViewData["Title"] = "Index";
+}
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
@@ -16,15 +19,15 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Market Cap Rank</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Current Price</th>
+                    <th scope="col">Current Price USD</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="a in coins">
-                    <th scope="row">{{a.market_cap_rank}}</th>
-                    <td><img src="{{a.image}} || null" style="height: 20px; margin-right: 10px;"/>{{a.name}}</td>
+                    <th scope="row">#{{ a.market_cap_rank }}</th>
+                    <td><img src="{{ a.image }}" style="height: 20px; margin-right: 10px;"/>{{a.name}}</td>
                     <td>{{a.current_price.toLocaleString('en-us',{style: 'currency', currency: 'USD', minimumFractionDigits: 5})}}</td>
                 </tr>
             </tbody>

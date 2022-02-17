@@ -6,50 +6,64 @@ appname.controller('appCtrl', ['$scope', '$http',
 
         $scope.init = function () {
             var httpRequest = $http({
-                method: 'POST',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                url: "/HomeController/GetConversion",
+                method: "POST",
+                url: "Home/GetConversion",
             }).then(function (response, status) {
-                debugger;
-                
+                var data = response.data;
 
+                if (data.success == true) {
+                    $scope.quotes = data.quotes;
+                    //I Didn't understand 2º request in introduction so the conversion code ends here. 
+                    //Seems like a pointless conversion to me from FIAT then back to USD
+                }
+
+            }, function (response) {
+                console.log("Connection failed => GetConverison");
             });
-        }
+        };
+
+        $scope.formatToCurrency = amount => { return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"); };
 
         $scope.init();
 
-        "use strict";
+        // #region SignalR
 
+        "use strict";
         var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-        connection.on("ReceiveMessage", function (data) {
-            $scope.coins = data;
-            $console.log($scope.coins[0].image);
-        });
-
         connection.start().then(function () {
-            connection.invoke("SendMessage").catch(function (err) {
-                return console.error(err.toString());
-            });
+            getData();
             $scope.$apply();
         }).catch(function (err) {
             return console.error(err.toString());
         });
 
-        setInterval(function () {
+        function getData() {
+            connection.invoke("SendMessage").catch(function (err) {
+                return console.error(err.toString());
+            });
+        };
+
+        connection.on("ReceiveMessage", function (data) {
+            $scope.coins = data;
+            $scope.$apply();
+        });
+
+        setInterval(function () { //Not familiar with SignalR, so it's most likely incorrect
             connection.invoke("SendMessage").catch(function (err) {
                 return console.error(err.toString());
             });
             $scope.$apply();
         }, 10000);
 
-        document.getElementById("sendButton").addEventListener("click", function (event) {
-            connection.invoke("SendMessage").catch(function (err) {
-                return console.error(err.toString());
-            });
-            event.preventDefault();
-            $scope.$apply();
+        connection.onclose(function (e) {
+            if (e) {
+                abp.log.debug('Connection closed with error: ' + e);
+            } else {
+                abp.log.debug('Disconnected');
+            }
+
+            tryReconnect();
         });
 
         function tryReconnect() {
@@ -69,16 +83,6 @@ appname.controller('appCtrl', ['$scope', '$http',
             }
         }
 
-        connection.onclose(function (e) {
-            if (e) {
-                abp.log.debug('Connection closed with error: ' + e);
-            } else {
-                abp.log.debug('Disconnected');
-            }
-
-            tryReconnect();
-        });
-
-        const formatToCurrency = amount => { return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"); };
+        // #endregion
 
     }]);

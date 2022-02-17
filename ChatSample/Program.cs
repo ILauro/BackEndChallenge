@@ -1,4 +1,4 @@
-using SignalRChat.Hubs;
+using BackendChallenge.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,5 +22,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.Run();
