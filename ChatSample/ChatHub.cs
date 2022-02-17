@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 
 namespace SignalRChat.Hubs
@@ -8,7 +9,7 @@ namespace SignalRChat.Hubs
     {
         static HttpClient client = new HttpClient();
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage()
         {
             string apiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD";
             var myDeserializedClass = new List<Root>();
@@ -16,7 +17,19 @@ namespace SignalRChat.Hubs
             var data = await response.Content.ReadAsStringAsync();
             myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(data);
 
+            var database = new MongoClient("mongodb://localhost:27017/test");
+            var db = database.GetDatabase("Logs");
+            var coll = db.GetCollection<Logs>("Logs");
+            coll.InsertOneAsync(new Logs { Date = DateTime.Now, Crypto = myDeserializedClass });
+
             await Clients.All.SendAsync("ReceiveMessage", myDeserializedClass);
+        }
+
+
+        public class Logs
+        {
+            public DateTime Date { get; set; }
+            public List<Root> Crypto { get; set; }
         }
 
         public class Roi
