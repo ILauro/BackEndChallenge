@@ -1,3 +1,3 @@
-# BackEndChallenge
+# SignalRHub
 
 Experiment with SignalR
